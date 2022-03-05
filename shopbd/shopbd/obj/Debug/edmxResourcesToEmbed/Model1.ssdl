@@ -1,0 +1,132 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="myshopdbModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="tblcat">
+    <Key>
+      <PropertyRef Name="cid" />
+    </Key>
+    <Property Name="cid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="cname" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tblimages">
+    <Key>
+      <PropertyRef Name="iid" />
+    </Key>
+    <Property Name="iid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="iname" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="pid" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tblorderdetails">
+    <Key>
+      <PropertyRef Name="did" />
+    </Key>
+    <Property Name="did" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="oid" Type="int" Nullable="false" />
+    <Property Name="pid" Type="int" Nullable="false" />
+    <Property Name="pprice" Type="int" Nullable="false" />
+    <Property Name="pqty" Type="int" Nullable="false" />
+    <Property Name="pamount" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tblorders">
+    <Key>
+      <PropertyRef Name="oid" />
+    </Key>
+    <Property Name="oid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="odate" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="opname" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="opphone" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="opaddress" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="opsaddress" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="oamount" Type="int" Nullable="false" />
+    <Property Name="ostatus" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tblpro">
+    <Key>
+      <PropertyRef Name="pid" />
+    </Key>
+    <Property Name="pid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="pname" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="pprice" Type="int" Nullable="false" />
+    <Property Name="pdetails" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="cid" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tblusers">
+    <Key>
+      <PropertyRef Name="uid" />
+    </Key>
+    <Property Name="uid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="uname" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="upass" Type="varchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <Association Name="tblimages_ibfk_1">
+    <End Role="tblpro" Type="Self.tblpro" Multiplicity="1" />
+    <End Role="tblimages" Type="Self.tblimages" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblpro">
+        <PropertyRef Name="pid" />
+      </Principal>
+      <Dependent Role="tblimages">
+        <PropertyRef Name="pid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="tblorderdetails_ibfk_1">
+    <End Role="tblorders" Type="Self.tblorders" Multiplicity="1" />
+    <End Role="tblorderdetails" Type="Self.tblorderdetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblorders">
+        <PropertyRef Name="oid" />
+      </Principal>
+      <Dependent Role="tblorderdetails">
+        <PropertyRef Name="oid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="tblorderdetails_ibfk_2">
+    <End Role="tblpro" Type="Self.tblpro" Multiplicity="1" />
+    <End Role="tblorderdetails" Type="Self.tblorderdetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblpro">
+        <PropertyRef Name="pid" />
+      </Principal>
+      <Dependent Role="tblorderdetails">
+        <PropertyRef Name="pid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="tblpro_ibfk_1">
+    <End Role="tblcat" Type="Self.tblcat" Multiplicity="1" />
+    <End Role="tblpro" Type="Self.tblpro" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblcat">
+        <PropertyRef Name="cid" />
+      </Principal>
+      <Dependent Role="tblpro">
+        <PropertyRef Name="cid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="myshopdbModelStoreContainer">
+    <EntitySet Name="tblcat" EntityType="Self.tblcat" Schema="myshopdb" store:Type="Tables" />
+    <EntitySet Name="tblimages" EntityType="Self.tblimages" Schema="myshopdb" store:Type="Tables" />
+    <EntitySet Name="tblorderdetails" EntityType="Self.tblorderdetails" Schema="myshopdb" store:Type="Tables" />
+    <EntitySet Name="tblorders" EntityType="Self.tblorders" Schema="myshopdb" store:Type="Tables" />
+    <EntitySet Name="tblpro" EntityType="Self.tblpro" Schema="myshopdb" store:Type="Tables" />
+    <EntitySet Name="tblusers" EntityType="Self.tblusers" Schema="myshopdb" store:Type="Tables" />
+    <AssociationSet Name="tblimages_ibfk_1" Association="Self.tblimages_ibfk_1">
+      <End Role="tblpro" EntitySet="tblpro" />
+      <End Role="tblimages" EntitySet="tblimages" />
+    </AssociationSet>
+    <AssociationSet Name="tblorderdetails_ibfk_1" Association="Self.tblorderdetails_ibfk_1">
+      <End Role="tblorders" EntitySet="tblorders" />
+      <End Role="tblorderdetails" EntitySet="tblorderdetails" />
+    </AssociationSet>
+    <AssociationSet Name="tblorderdetails_ibfk_2" Association="Self.tblorderdetails_ibfk_2">
+      <End Role="tblpro" EntitySet="tblpro" />
+      <End Role="tblorderdetails" EntitySet="tblorderdetails" />
+    </AssociationSet>
+    <AssociationSet Name="tblpro_ibfk_1" Association="Self.tblpro_ibfk_1">
+      <End Role="tblcat" EntitySet="tblcat" />
+      <End Role="tblpro" EntitySet="tblpro" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
